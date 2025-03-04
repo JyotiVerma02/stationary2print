@@ -1,5 +1,22 @@
+<!--<resources>-->
+<!--    <string name="billing_information">Billing Information</string>-->
+<!--    <string name="order_details">Order Details</string>-->
+<!--    <string name="color_pages_0">Color Pages: 0</string>-->
+<!--    <string name="b_w_pages_0">B/W Pages: 0</string>-->
+<!--    <string name="binding_no">Binding: No</string>-->
+<!--    <string name="total_amount_0_00">Total Amount: ₹0.00</string>-->
+<!--    <string name="pay_now">Pay Now</string>-->
+<!--    <string name="app_name">Stationary2Print</string>-->
+<!--</resources>-->
+
+
+
 <resources>
     <string name="app_name">stationary2print</string>
+        <string name="billing_information">Billing Information</string>
+        <string name="order_details">Order Details</string>
+        <string name="color_pages_0">Color Pages: 0</string>
+
     <string name="app_logo">App Logo</string>
     <string name="access_local_file">Select File</string>
     <string name="no_file_selected">No file selected</string>
@@ -8,5 +25,8 @@
     <string name="binding_file">Binding</string>
     <string name="subtotal_0_00">Subtotal: ₹0.00</string>
     <string name="next_step">Next</string>
+    <string name="b_w_pages_0">B/W Pages: 0</string>
+    <string name="binding_no">Binding: No</string>
+    <string name="total_amount_0_00">Total Amount: ₹0.00</string>
+    <string name="pay_now"></string>
 </resources>
-

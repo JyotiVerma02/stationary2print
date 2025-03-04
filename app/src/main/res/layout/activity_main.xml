@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:padding="16dp"
     android:fitsSystemWindows="true"
-    android:background="@android:color/white">
+    android:background="@color/white">
 
     <!-- Top Icon -->
     <ImageView
@@ -19,17 +19,18 @@
         android:src="@drawable/printer1" />
 
     <!-- Button to Select File -->
+
+    <!-- Display Selected File -->
     <Button
         android:id="@+id/btnSelectFile"
         android:layout_width="299dp"
-        android:textSize="14sp"
         android:layout_height="wrap_content"
         android:layout_marginVertical="15dp"
         android:backgroundTint="#3674B5"
         android:text="@string/access_local_file"
-        android:textColor="@android:color/white" />
+        android:textColor="#000000"
+        android:textSize="14sp" />
 
-    <!-- Display Selected File -->
     <TextView
         android:id="@+id/tvSelectedFile"
         android:layout_width="match_parent"
@@ -95,6 +96,6 @@
         android:layout_marginVertical="20dp"
         android:backgroundTint="#3674B5"
         android:text="@string/next_step"
-        android:textColor="@android:color/white" />
+        android:textColor="#ffffff" />
 
 </LinearLayout>

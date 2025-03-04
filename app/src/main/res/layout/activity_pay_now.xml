@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="50dp"
-        android:text="billing_information"
+        android:text="@string/billing_information"
         android:textAlignment="center"
         android:textColor="#1953E7"
         android:textSize="24sp"
@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="65dp"
-        android:text="order_details"
+        android:text="@string/order_details"
         android:textColor="#000000"
         android:textSize="20sp"
         android:textStyle="bold" />
@@ -40,7 +40,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="25dp"
         android:padding="4dp"
-        android:text="color_pages_0"
+        android:text="@string/color_pages_0"
         android:textColor="#333333"
         android:textSize="18sp" />
 
@@ -51,7 +51,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="25dp"
         android:padding="4dp"
-        android:text="b_w_pages_0"
+        android:text="@string/b_w_pages_0"
         android:textColor="#333333"
         android:textSize="18sp" />
 
@@ -62,7 +62,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="25dp"
         android:padding="4dp"
-        android:text="binding_no"
+        android:text="@string/binding_no"
         android:textColor="#333333"
         android:textSize="18sp" />
 
@@ -73,7 +73,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="40dp"
         android:padding="6dp"
-        android:text="total_amount_0_00"
+        android:text="@string/total_amount_0_00"
         android:textColor="#1953E7"
         android:textSize="20sp"
         android:textStyle="bold" />
@@ -86,10 +86,8 @@
         android:layout_gravity="center"
         android:layout_marginTop="120dp"
         android:backgroundTint="#1953E7"
-        android:text="pay_now"
+        android:text="@string/pay_now"
         android:textColor="@android:color/white"
         android:textStyle="bold" />
 
 </LinearLayout>
-
-

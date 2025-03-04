@@ -11,17 +11,15 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import androidx.activity.EdgeToEdge;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
+
 import android.database.Cursor;
 import android.provider.OpenableColumns;
-import androidx.core.view.WindowInsetsCompat;
 
-class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
 
-    private static final int FILE_SELECT_CODE = 100;
     private EditText etColorPages, etBWPages;
     private CheckBox cbBinding;
     private TextView tvSubtotal, tvSelectedFile;
@@ -30,17 +28,26 @@ class MainActivity extends AppCompatActivity {
     private double totalAmount = 0.0;
     private String selectedFileName = "";
 
+    @SuppressLint("SetTextI18n")
+    private final ActivityResultLauncher<Intent> filePickerLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                    selectedFileUri = result.getData().getData();
+                    if (selectedFileUri != null) {
+                        selectedFileName = getFileName(selectedFileUri);
+                        tvSelectedFile.setText("Selected File: " + selectedFileName);
+                        Toast.makeText(this, "File Selected Successfully!", Toast.LENGTH_SHORT).show();
+                        checkNextButtonState();
+                    }
+                }
+            }
+    );
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
 
         // Initialize UI components
         etColorPages = findViewById(R.id.etColorPages);
@@ -78,15 +85,15 @@ class MainActivity extends AppCompatActivity {
         btnSelectFile.setOnClickListener(v -> openFilePicker());
 
         btnNextStep.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, com.example.stationary2print.Paynow.class);
+            Intent intent = new Intent(MainActivity.this, Paynow.class);
             intent.putExtra("colorPages", getIntFromEditText(etColorPages));
             intent.putExtra("bwPages", getIntFromEditText(etBWPages));
             intent.putExtra("isBinding", cbBinding.isChecked());
             intent.putExtra("totalAmount", totalAmount);
 
             if (selectedFileUri != null) {
-                intent.putExtra("selectedFileUri", selectedFileUri.toString()); // Pass File URI
-                intent.putExtra("selectedFileName", selectedFileName); // Pass File Name
+                intent.putExtra("selectedFileUri", selectedFileUri.toString());
+                intent.putExtra("selectedFileName", selectedFileName);
             }
 
             startActivity(intent);
@@ -99,29 +106,13 @@ class MainActivity extends AppCompatActivity {
         intent.setType("*/*");
         String[] mimeTypes = {"image/png", "image/jpeg", "application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"};
         intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
-        startActivityForResult(intent, FILE_SELECT_CODE);
-    }
-
-    @SuppressLint("SetTextI18n")
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == FILE_SELECT_CODE && resultCode == RESULT_OK && data != null) {
-            selectedFileUri = data.getData();
-            if (selectedFileUri != null) {
-                selectedFileName = getFileName(selectedFileUri);
-                tvSelectedFile.setText("Selected File: " + selectedFileName);
-                Toast.makeText(this, "File Selected Successfully!", Toast.LENGTH_SHORT).show();
-                checkNextButtonState();
-            }
-        }
+        filePickerLauncher.launch(intent);
     }
 
     private String getFileName(Uri uri) {
         String fileName = "Unknown File";
 
-        if (uri.getScheme().equals("content")) {
+        if ("content".equals(uri.getScheme())) {
             try (Cursor cursor = getContentResolver().query(uri, null, null, null, null)) {
                 if (cursor != null && cursor.moveToFirst()) {
                     int nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
@@ -130,17 +121,15 @@ class MainActivity extends AppCompatActivity {
                     }
                 }
             }
-        } else {
-            fileName = uri.getPath();
-            int cut = fileName.lastIndexOf('/');
+        } else if (uri.getPath() != null) {
+            int cut = uri.getPath().lastIndexOf('/');
             if (cut != -1) {
-                fileName = fileName.substring(cut + 1);
+                fileName = uri.getPath().substring(cut + 1);
             }
         }
 
         return fileName;
     }
-
 
     @SuppressLint({"SetTextI18n", "DefaultLocale"})
     private void calculateTotal() {
@@ -168,7 +157,6 @@ class MainActivity extends AppCompatActivity {
         int colorPages = getIntFromEditText(etColorPages);
         int bwPages = getIntFromEditText(etBWPages);
 
-        // Enable next button only if pages > 0 and file is selected
         btnNextStep.setEnabled((colorPages > 0 || bwPages > 0) && selectedFileUri != null);
     }
 }

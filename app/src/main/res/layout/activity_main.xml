@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginVertical="5dp"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:fitsSystemWindows="true"
+    android:background="@android:color/white">
+
+    <!-- Top Icon -->
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="45dp"
+        android:contentDescription="@string/app_logo"
+        android:src="@drawable/printer1" />
+
+    <!-- Button to Select File -->
+    <Button
+        android:id="@+id/btnSelectFile"
+        android:layout_width="299dp"
+        android:textSize="14sp"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="15dp"
+        android:backgroundTint="#3674B5"
+        android:text="@string/access_local_file"
+        android:textColor="@android:color/white" />
+
+    <!-- Display Selected File -->
+    <TextView
+        android:id="@+id/tvSelectedFile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="10dp"
+        android:text="@string/no_file_selected"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="16sp" />
+
+    <!-- Input for Color Pages -->
+    <EditText
+        android:id="@+id/etColorPages"
+        android:layout_width="350dp"
+        android:layout_height="57dp"
+        android:layout_marginVertical="13dp"
+        android:hint="@string/color_pages"
+        android:inputType="number"
+        android:textColor="#000000"
+        android:backgroundTint="#B0BEC5"
+        android:autofillHints="username" />
+
+    <!-- Input for Black & White Pages -->
+    <EditText
+        android:id="@+id/etBWPages"
+        android:layout_width="350dp"
+        android:layout_height="57dp"
+        android:layout_marginVertical="13dp"
+        android:hint="@string/b_w_pages"
+        android:inputType="number"
+        android:textColor="#000000"
+        android:backgroundTint="#B0BEC5"
+        android:autofillHints="username" />
+
+    <!-- Binding Option -->
+    <CheckBox
+        android:id="@+id/cbBinding"
+        android:layout_width="167dp"
+        android:layout_height="48dp"
+        android:layout_marginVertical="12dp"
+        android:textColor="#000000"
+        android:text="@string/binding_file"
+        android:contentDescription="Select this option if you want file binding." />
+
+    <!-- Display Subtotal -->
+    <TextView
+        android:id="@+id/tvSubtotal"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginVertical="8dp"
+        android:gravity="center"
+        android:text="@string/subtotal_0_00"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="#1976D2" />
+
+    <!-- Next Step Button -->
+    <Button
+        android:id="@+id/btnNextStep"
+        android:layout_width="159dp"
+        android:layout_height="56dp"
+        android:textSize="14sp"
+        android:layout_marginVertical="20dp"
+        android:backgroundTint="#3674B5"
+        android:text="@string/next_step"
+        android:textColor="@android:color/white" />
+
+</LinearLayout>

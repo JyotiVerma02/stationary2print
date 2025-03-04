@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "832539496844",
+    "firebase_url": "https://stationary2print-default-rtdb.firebaseio.com",
+    "project_id": "stationary2print",
+    "storage_bucket": "stationary2print.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:832539496844:android:638188359b3ef534dd06a9",
+        "android_client_info": {
+          "package_name": "com.example.stationary2print"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYCP6eSRW4MMQ5fQIhIuabA45OxgiZ3zE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

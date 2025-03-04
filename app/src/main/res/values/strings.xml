@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">stationary2print</string>
+    <string name="app_logo">App Logo</string>
+    <string name="access_local_file">Select File</string>
+    <string name="no_file_selected">No file selected</string>
+    <string name="color_pages">Enter color pages</string>
+    <string name="b_w_pages">Enter B/W pages</string>
+    <string name="binding_file">Binding</string>
+    <string name="subtotal_0_00">Subtotal: ₹0.00</string>
+    <string name="next_step">Next</string>
+</resources>
+

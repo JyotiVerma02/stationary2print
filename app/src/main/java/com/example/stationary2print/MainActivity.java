@@ -17,6 +17,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.database.Cursor;
 import android.provider.OpenableColumns;
+import android.util.Log;
+
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private Uri selectedFileUri;
     private double totalAmount = 0.0;
     private String selectedFileName = "";
+    private FirebaseFirestore db;
 
     @SuppressLint("SetTextI18n")
     private final ActivityResultLauncher<Intent> filePickerLauncher = registerForActivityResult(
@@ -48,6 +56,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Initialize Firestore
+        db = FirebaseFirestore.getInstance();
 
         // Initialize UI components
         etColorPages = findViewById(R.id.etColorPages);
@@ -97,6 +108,8 @@ public class MainActivity extends AppCompatActivity {
             }
 
             startActivity(intent);
+            // Save data to Firestore when the "Next Step" button is clicked
+            saveDataToFirestore();
         });
     }
 
@@ -158,5 +171,26 @@ public class MainActivity extends AppCompatActivity {
         int bwPages = getIntFromEditText(etBWPages);
 
         btnNextStep.setEnabled((colorPages > 0 || bwPages > 0) && selectedFileUri != null);
+    }
+    private void saveDataToFirestore() {
+        // Prepare data to be saved
+        Map<String, Object> orderData = new HashMap<>();
+        orderData.put("image_url", selectedFileUri != null ? selectedFileUri.toString() : ""); // Store the file URI as a string
+        orderData.put("color_pages", getIntFromEditText(etColorPages));
+        orderData.put("bw_pages", getIntFromEditText(etBWPages));
+        orderData.put("isBinding", cbBinding.isChecked());
+        orderData.put("sub_total", totalAmount);
+
+        // Add a new document with a generated ID
+        db.collection("stationery_files")
+                .add(orderData)
+                .addOnSuccessListener(documentReference -> {
+                    Log.d("Firestore", "DocumentSnapshot added with ID: " + documentReference.getId());
+                    Toast.makeText(MainActivity.this, "Order data saved successfully!", Toast.LENGTH_SHORT).show();
+                })
+                .addOnFailureListener(e -> {
+                    Log.w("Firestore", "Error adding document", e);
+                    Toast.makeText(MainActivity.this, "Failed to save order data.", Toast.LENGTH_SHORT).show();
+                });
     }
 }

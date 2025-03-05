@@ -98,4 +98,15 @@
         android:text="@string/next_step"
         android:textColor="#ffffff" />
 
+    <!-- Next Step Button -->
+    <Button
+        android:id="@+id/go_to_stationery_list"
+        android:layout_width="159dp"
+        android:layout_height="56dp"
+        android:textSize="14sp"
+        android:layout_marginVertical="20dp"
+        android:backgroundTint="#3674B5"
+        android:text="@string/go_to_stationery_list"
+        android:textColor="#ffffff" />
+
 </LinearLayout>

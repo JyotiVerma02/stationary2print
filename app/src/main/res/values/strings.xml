@@ -10,12 +10,11 @@
 <!--</resources>-->
 
 
-
 <resources>
     <string name="app_name">stationary2print</string>
-        <string name="billing_information">Billing Information</string>
-        <string name="order_details">Order Details</string>
-        <string name="color_pages_0">Color Pages: 0</string>
+    <string name="billing_information">Billing Information</string>
+    <string name="order_details">Order Details</string>
+    <string name="color_pages_0">Color Pages: 0</string>
 
     <string name="app_logo">App Logo</string>
     <string name="access_local_file">Select File</string>
@@ -28,5 +27,8 @@
     <string name="b_w_pages_0">B/W Pages: 0</string>
     <string name="binding_no">Binding: No</string>
     <string name="total_amount_0_00">Total Amount: ₹0.00</string>
-    <string name="pay_now"></string>
+    <string name="pay_now">Pay Now</string>
+<!--    go_to_stationery_list-->
+    <string name="go_to_stationery_list">Go to stationery list</string>
+
 </resources>

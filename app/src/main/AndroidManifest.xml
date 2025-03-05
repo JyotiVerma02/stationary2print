@@ -11,23 +11,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Stationary2Print">
-
+        <activity
+            android:name=".table"
+            android:exported="false" />
         <!-- Main Activity -->
         <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-
-        <!-- PayNow Activity -->
+        </activity> <!-- PayNow Activity -->
         <activity
             android:name=".Paynow"
             android:exported="false" />
-
     </application>
 
 </manifest>

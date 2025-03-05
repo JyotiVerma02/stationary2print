@@ -19,6 +19,7 @@ import android.database.Cursor;
 import android.provider.OpenableColumns;
 import android.util.Log;
 
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 
@@ -173,6 +174,12 @@ public class MainActivity extends AppCompatActivity {
         btnNextStep.setEnabled((colorPages > 0 || bwPages > 0) && selectedFileUri != null);
     }
     private void saveDataToFirestore() {
+    DocumentReference counterRef = db.collection("counters").document("orders_counter");
+    counterRef.get().addOnSuccessListener(documentSnapshot -> {
+        final long[] nextId = {1}; // Using an array to keep it effectively final
+        Long countValue = documentSnapshot.getLong("count");
+        nextId[0] = (countValue != null) ? countValue + 1 : 1; // Prevent NullPointerException
+
         // Prepare data to be saved
         Map<String, Object> orderData = new HashMap<>();
         orderData.put("image_url", selectedFileUri != null ? selectedFileUri.toString() : ""); // Store the file URI as a string
@@ -181,16 +188,26 @@ public class MainActivity extends AppCompatActivity {
         orderData.put("isBinding", cbBinding.isChecked());
         orderData.put("sub_total", totalAmount);
 
-        // Add a new document with a generated ID
-        db.collection("stationery_files")
-                .add(orderData)
-                .addOnSuccessListener(documentReference -> {
-                    Log.d("Firestore", "DocumentSnapshot added with ID: " + documentReference.getId());
+        // Add a new document with the incremented ID
+        db.collection("stationery_files").document(String.valueOf(nextId[0]))
+                .set(orderData)
+                .addOnSuccessListener(aVoid -> {
+                    Log.d("Firestore", "Document added with ID: " + nextId[0]);
                     Toast.makeText(MainActivity.this, "Order data saved successfully!", Toast.LENGTH_SHORT).show();
+
+                    // Update the counter
+                    Map<String, Object> counterUpdate = new HashMap<>();
+                    counterUpdate.put("count", nextId[0]);
+                    counterRef.set(counterUpdate, SetOptions.merge())
+                            .addOnFailureListener(e -> Log.w("Firestore", "Failed to update counter", e));
                 })
                 .addOnFailureListener(e -> {
                     Log.w("Firestore", "Error adding document", e);
                     Toast.makeText(MainActivity.this, "Failed to save order data.", Toast.LENGTH_SHORT).show();
                 });
+    }).addOnFailureListener(e -> {
+        Log.w("Firestore", "Failed to get counter document", e);
+        Toast.makeText(MainActivity.this, "Failed to get counter document.", Toast.LENGTH_SHORT).show();
+    });
     }
 }
